@@ -5,3 +5,5 @@
 /build
 *.tk
 *.bash
+*.gch
+*.out
