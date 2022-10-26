@@ -14,6 +14,18 @@ using std::endl;
 // using new explicitly, with make_unique primitives are
 // zero-initialized and objects default constructed
 
+// you can also have your own functions to allocate
+// and free memory
+Basic* NewBasic()
+{
+	return new Basic;
+}
+
+void FreeBasic(Basic* obj)
+{
+	delete obj;
+}
+
 int main()
 {
 	// This is the recommended way to create a
@@ -23,5 +35,17 @@ int main()
 	
 	// This is also valid but is way less readable
 	unique_ptr<Basic> obj{ new Basic{} };
+	
+	// you can manually realease the resource
+	// losing ownership
+	// obj.release();
+	// or free it and set it to another value
+	// obj.reset(new Basic{});
+	// or just free it and set the pointer to
+	// null
+	obj.reset();
+
+	// Using own allocation
+	unique_ptr<Basic, decltype(&FreeBasic)> ptr{ NewBasic(), FreeBasic };
 	return 0;
 }
