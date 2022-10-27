@@ -1,6 +1,7 @@
 #include <iostream>
 #include <memory>
 #include "Basic.h"
+#include "Data.h"
 
 using std::shared_ptr;
 using std::make_shared;
@@ -20,5 +21,16 @@ int main()
 	cout << sameObj.use_count() << endl;
 	obj.reset();	
 	cout << sameObj.use_count() << endl;
+
+	// aliasing
+	auto objWithMember{ make_shared<Data>() };
+	auto alias{ shared_ptr<int>{ objWithMember, &objWithMember->data } };
+
+	cout << alias.use_count() << endl;
+	objWithMember.reset();
+	cout << alias.use_count() << endl;
+	
+	cout << *alias << endl;
+
 	return 0;
 }
