@@ -7,3 +7,6 @@
 *.bash
 *.gch
 *.out
+*.gcm
+gcm.cache/
+.vscode
